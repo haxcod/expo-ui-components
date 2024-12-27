@@ -22,7 +22,7 @@ const ButtonView: React.FC<ButtonViewProps> = ({
   buttonStyle,
   textStyle,
   disabled = false,
-  activeOpacity = 0.7,  // Subtle activeOpacity for a more modern feel
+  activeOpacity = 0.7,
 }) => {
   return (
     <TouchableOpacity
@@ -36,30 +36,30 @@ const ButtonView: React.FC<ButtonViewProps> = ({
   );
 };
 
-export { ButtonView };
-
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#007BFF",  
-    paddingVertical: 12, 
-    paddingHorizontal: 20, 
+    backgroundColor: "#007BFF",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
     borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
-    elevation: 5,  
-    shadowColor: "#000",  
-    shadowOffset: { width: 0, height: 2 }, 
-    shadowOpacity: 0.3, 
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
     shadowRadius: 4,
   },
   text: {
-    color: "#FFFFFF",  
+    color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "600",
   },
   disabledButton: {
-    backgroundColor: "#A9A9A9",  
+    backgroundColor: "#A9A9A9",
     elevation: 0,
-    shadowOpacity: 0, 
+    shadowOpacity: 0,
   },
 });
+
+export { ButtonView };

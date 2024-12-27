@@ -27,7 +27,7 @@ The `TextView` component is a simple and customizable component for displaying t
 ```javascript
 import React from 'react';
 import { View } from 'react-native';
-import TextView from './components/TextView';
+import { TextView } from 'expo-ui-components';
 
 const App = () => {
   return (
@@ -61,7 +61,7 @@ The `ButtonView` component is a versatile button with customizable styles and st
 ```javascript
 import React from 'react';
 import { View } from 'react-native';
-import ButtonView from './components/ButtonView';
+import { ButtonView } from 'expo-ui-components';
 
 const App = () => {
   return (
@@ -79,6 +79,52 @@ const App = () => {
 export default App;
 ```
 
+
+### CardView
+
+The `CardView` CardView component is a versatile and reusable container with customizable styles. It is ideal for grouping related UI elements with consistent styling, like cards.
+
+#### Props
+
+- **`children`**** (ReactNode, required)**: The content to render inside the card.
+- **`onPress`**** (function, optional)**: Function to execute when the card is pressed. Only works if. `isClickable` is `true`.
+- **`cardStyle`**** (ViewStyle, optional)**: Custom styles for the card container.
+- **`isClickable`**** (boolean, optional)**: Enables touch interactions if set to `true`. Default is `false`.
+- **`activeOpacity`**** (number, optional)**: The opacity when the card is pressed. Only works if `isClickable` is `true`. Default is `0.7`.
+
+#### Example Usage
+
+```javascript
+import React from 'react';
+import { Text, View } from 'react-native';
+import { CardView } from 'expo-ui-components';
+
+const App = () => {
+  return (
+    <View style={{ padding: 16 }}>
+      {/* Non-clickable card */}
+      <CardView cardStyle={{ backgroundColor: '#f9f9f9' }}>
+        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Non-Clickable Card</Text>
+        <Text>This card does not respond to touch interactions.</Text>
+      </CardView>
+
+      {/* Clickable card */}
+      <CardView
+        cardStyle={{ backgroundColor: '#fff', borderWidth: 1, borderColor: '#ddd' }}
+        isClickable
+        onPress={() => alert('Card Pressed!')}
+      >
+        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Clickable Card</Text>
+        <Text>This card responds to touch interactions.</Text>
+      </CardView>
+    </View>
+  );
+};
+
+export default App;
+
+```
+
 ## Upcoming Components
 
 - **InputField**: A styled input component for text entry.
@@ -91,7 +137,7 @@ These components will be added incrementally to enhance the library's capabiliti
 Import and use the available components in your React Native project:
 
 ```javascript
-import { TextView, ButtonView } from '@your-namespace/ui-components';
+import { TextView, ButtonView, CardView } from 'expo-ui-components';
 ```
 
 ## Contributing

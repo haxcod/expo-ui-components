@@ -1,2 +1,3 @@
-export * from './components/ButtonView'
-export * from './components/TextView'
+export { ButtonView } from "./components/ButtonView";
+export { TextView } from "./components/TextView";
+export { CardView } from "./components/CardView";
