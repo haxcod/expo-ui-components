@@ -1,5 +1,3 @@
-# UI Components Library
-
 ## Overview
 
 This library provides reusable and customizable UI components for React Native projects. It is designed to streamline the development process and ensure consistency across applications.

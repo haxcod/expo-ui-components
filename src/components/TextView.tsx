@@ -1,12 +1,13 @@
 import * as React from "react";
-import { Text, TextStyle, TouchableOpacity } from "react-native";
+import { Text, TextStyle, TouchableOpacity, ViewStyle, StyleSheet } from "react-native";
 
 type TextViewProps = {
   text: string;
   style?: TextStyle;
   onPress?: () => void;
-  isClickable: false;
+  isClickable: boolean;
   activeOpacity?: number;
+  containerStyle?: ViewStyle; 
 };
 
 const TextView: React.FC<TextViewProps> = ({
@@ -14,19 +15,37 @@ const TextView: React.FC<TextViewProps> = ({
   style,
   onPress,
   isClickable,
-  activeOpacity = 8,
+  activeOpacity = 0.7,
+  containerStyle,
 }) => {
   if (onPress) {
     return (
       <TouchableOpacity
         onPress={onPress}
-        activeOpacity={isClickable ? activeOpacity : 10}
+        activeOpacity={isClickable ? activeOpacity : 1}
+        style={[styles.clickableContainer, containerStyle]}  // Apply container style
       >
-        <Text style={style}>{text}</Text>
+        <Text style={[styles.text, style]}>{text}</Text>
       </TouchableOpacity>
     );
   }
-  return <Text style={style}>{text}</Text>;
+  
+  return <Text style={[styles.text, style]}>{text}</Text>;
 };
 
-export default TextView;
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 16, 
+    fontFamily: "Roboto", 
+    color: "#333",  
+  },
+  clickableContainer: {
+    padding: 8, 
+    backgroundColor: "#007BFF",
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+
+export { TextView };
