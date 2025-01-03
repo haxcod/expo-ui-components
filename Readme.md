@@ -125,6 +125,51 @@ export default App;
 
 ```
 
+
+### HeaderView
+
+The `HeaderView`component is a highly customizable and reusable header for React Native applications. It supports dynamic icon visibility, title styles, and custom actions.
+
+#### Props
+
+- **`title`**** (string, required): The text displayed as the title of the header.
+- **`onBackPress`**** (function, required): Function executed when the back button is pressed.
+
+#### Example Usage
+
+```javascript
+import React from 'react';
+import { View } from 'react-native';
+import { HeaderView } from 'expo-ui-components';
+
+const App = () => {
+  return (
+    <View style={{ flex: 1 }}>
+      <HeaderView
+        title="Home"
+        onBackPress={() => alert('Back Pressed!')}
+        isMenu={true}
+        onMenuPress={() => alert('Menu Pressed!')}
+        isSearch={true}
+        onSearchPress={() => alert('Search Pressed!')}
+        backgroundColor="#4CAF50"
+        titleStyle={{ color: 'white', fontSize: 20 }}
+        additionalIcons={[
+          { name: 'notifications', onPress: () => alert('Notifications Pressed!'), color: 'yellow' },
+          { name: 'settings', onPress: () => alert('Settings Pressed!'), color: 'blue' },
+        ]}
+        isElevated={true}
+        isLoading={false}
+      />
+    </View>
+  );
+};
+
+export default App;
+
+```
+
+
 ## Upcoming Components
 
 - **InputField**: A styled input component for text entry.
