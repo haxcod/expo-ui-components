@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
-interface HeaderProps {
+type HeaderProps = {
   title: string;
   onBackPress: () => void;
   isMenu: boolean;
@@ -26,7 +26,7 @@ interface HeaderProps {
   }>;
   isElevated?: boolean;
   isLoading?: boolean;
-}
+};
 
 const HeaderView: React.FC<HeaderProps> = ({
   title,
@@ -123,4 +123,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HeaderView;
+export { HeaderView };

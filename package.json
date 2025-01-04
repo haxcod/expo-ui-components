@@ -1,6 +1,6 @@
 {
   "name": "expo-ui-components",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "UI components for React Native projects",
   "author": "haxcod",
   "type": "module",
@@ -12,7 +12,9 @@
   "keywords": [
     "npm",
     "ui-components",
-    "react-native-components"
+    "react-native-components",
+    "expo-ui-components",
+    "splash-screen"
   ],
   "homepage": "https://github.com/haxcod/expo-ui-components#readme",
   "bugs": {
@@ -31,5 +33,9 @@
     "react-native": "^0.76.5",
     "rollup": "^4.29.1"
   },
-    "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@expo/vector-icons": "^14.0.4",
+    "expo-linear-gradient": "^14.0.1"
+  }
 }
