@@ -1,22 +1,15 @@
 import * as React from "react";
 import {
-  StyleSheet,
   View,
   ViewStyle,
-  GestureResponderEvent,
-  Pressable,
   StyleProp,
+  StyleSheet,
   AccessibilityProps,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 
 type CardViewProps = {
   children: React.ReactNode;
-  cardStyle?: StyleProp<ViewStyle>;
-  isClickable?: boolean;
-  onPress?: (event: GestureResponderEvent) => void;
-  activeOpacity?: number;
-  gradientColors?: [string, string, ...string[]];
+  backgroundColor?: string;
   borderColor?: string;
   borderWidth?: number;
   borderRadius?: number;
@@ -25,100 +18,96 @@ type CardViewProps = {
   shadowOffset?: { width: number; height: number };
   shadowRadius?: number;
   elevation?: number;
+  padding?: number;
+  paddingVertical?: number;
+  paddingHorizontal?: number;
+  paddingTop?: number;
+  paddingBottom?: number;
+  paddingLeft?: number;
+  paddingRight?: number;
+  margin?: number;
+  marginVertical?: number;
+  marginHorizontal?: number;
+  marginTop?: number;
+  marginBottom?: number;
+  marginLeft?: number;
+  marginRight?: number;
   fullWidth?: boolean;
+  cardStyle?: StyleProp<ViewStyle>;
   accessibilityLabel?: string;
+  accessibilityHint?: string;
 } & AccessibilityProps;
 
 const CardView: React.FC<CardViewProps> = ({
   children,
-  cardStyle,
-  isClickable = false,
-  onPress,
-  activeOpacity = 0.7,
-  gradientColors,
+  backgroundColor = "#fff",
   borderColor,
   borderWidth,
-  borderRadius,
+  borderRadius = 8,
   shadowColor = "#000",
   shadowOpacity = 0.1,
   shadowOffset = { width: 0, height: 2 },
   shadowRadius = 4,
   elevation = 3,
+  padding,
+  paddingVertical = 16,
+  paddingHorizontal = 16,
+  paddingTop,
+  paddingBottom,
+  paddingLeft,
+  paddingRight,
+  margin,
+  marginVertical = 10,
+  marginHorizontal = 16,
+  marginTop,
+  marginBottom,
+  marginLeft,
+  marginRight,
   fullWidth = false,
-  accessibilityLabel,
+  cardStyle,
+  accessibilityLabel = "Card",
+  accessibilityHint,
 }) => {
-  const cardStyles = React.useMemo(
-    () =>
-      [
-        styles.card,
-        cardStyle,
-        borderColor && { borderColor, borderWidth },
-        borderRadius && { borderRadius },
-        fullWidth && { width: "100%" },
-        {
-          shadowColor,
-          shadowOpacity,
-          shadowOffset,
-          shadowRadius,
-          elevation,
-        },
-      ].filter(Boolean) as ViewStyle[],
-    [
-      cardStyle,
+  const cardStyles: StyleProp<ViewStyle> = StyleSheet.flatten([
+    {
+      backgroundColor,
       borderColor,
       borderWidth,
       borderRadius,
-      fullWidth,
       shadowColor,
       shadowOpacity,
       shadowOffset,
       shadowRadius,
       elevation,
-    ]
-  );
+      padding,
+      paddingVertical,
+      paddingHorizontal,
+      paddingTop,
+      paddingBottom,
+      paddingLeft,
+      paddingRight,
+      margin,
+      marginVertical,
+      marginHorizontal,
+      marginTop,
+      marginBottom,
+      marginLeft,
+      marginRight,
+      width: fullWidth ? "100%" : undefined,
+    },
+    cardStyle,
+  ]);
 
-  const CardContent = React.useMemo(
-    () =>
-      gradientColors ? (
-        <LinearGradient
-          colors={gradientColors.length >= 2 ? gradientColors : ["#fff", "#fff"]}
-          style={[...cardStyles, { overflow: "hidden" }]}
-        >
-          {children}
-        </LinearGradient>
-      ) : (
-        <View style={cardStyles}>{children}</View>
-      ),
-    [gradientColors, cardStyles, children]
+  return (
+    <View
+      style={cardStyles}
+      accessibilityRole="none"
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
+    >
+      {children}
+    </View>
   );
-  if (isClickable && onPress) {
-    return (
-      <Pressable
-        style={({ pressed }) => [
-          { opacity: pressed ? activeOpacity : 1 },
-          borderRadius && { borderRadius },
-        ]}
-        onPress={onPress}
-        accessibilityRole="button"
-        accessibilityLabel={accessibilityLabel || "Card"}
-        accessible
-      >
-        {CardContent}
-      </Pressable>
-    );
-  }
-
-  return CardContent;
 };
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    marginVertical: 10,
-    marginHorizontal: 16,
-    padding: 16,
-  },
-});
 
 export { CardView };

@@ -6,6 +6,7 @@ import {
   View,
   ActivityIndicator,
   TextStyle,
+  ViewStyle,
   StyleProp,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -19,12 +20,32 @@ type HeaderProps = {
   onSearchPress?: () => void;
   backgroundColor?: string;
   titleStyle?: StyleProp<TextStyle>;
+  headerStyle?: StyleProp<ViewStyle>;
+  padding?: number;
+  paddingVertical?: number;
+  paddingHorizontal?: number;
+  paddingTop?: number;
+  paddingBottom?: number;
+  paddingLeft?: number;
+  paddingRight?: number;
+  margin?: number;
+  marginVertical?: number;
+  marginHorizontal?: number;
+  marginTop?: number;
+  marginBottom?: number;
+  marginLeft?: number;
+  marginRight?: number;
+  borderRadius?: number;
+  shadowColor?: string;
+  shadowOffset?: { width: number; height: number };
+  shadowOpacity?: number;
+  shadowRadius?: number;
+  elevation?: number;
   additionalIcons?: Array<{
     name: string;
     onPress: () => void;
     color?: string;
   }>;
-  isElevated?: boolean;
   isLoading?: boolean;
 };
 
@@ -37,10 +58,60 @@ const HeaderView: React.FC<HeaderProps> = ({
   onSearchPress,
   backgroundColor = "#f8f8f8",
   titleStyle = {},
+  headerStyle = {},
+  padding,
+  paddingVertical = 16,
+  paddingHorizontal = 16,
+  paddingTop,
+  paddingBottom,
+  paddingLeft,
+  paddingRight,
+  margin,
+  marginVertical,
+  marginHorizontal,
+  marginTop,
+  marginBottom,
+  marginLeft,
+  marginRight,
+  borderRadius = 8,
+  shadowColor = "#000",
+  shadowOffset = { width: 0, height: 2 },
+  shadowOpacity = 0.1,
+  shadowRadius = 4,
+  elevation = 4,
   additionalIcons = [],
-  isElevated = false,
   isLoading = false,
 }) => {
+  const headerStyles: StyleProp<ViewStyle> = StyleSheet.flatten([
+    {
+      backgroundColor,
+      borderRadius,
+      padding,
+      paddingVertical,
+      paddingHorizontal,
+      paddingTop,
+      paddingBottom,
+      paddingLeft,
+      paddingRight,
+      margin,
+      marginVertical,
+      marginHorizontal,
+      marginTop,
+      marginBottom,
+      marginLeft,
+      marginRight,
+      shadowColor,
+      shadowOffset,
+      shadowOpacity,
+      shadowRadius,
+      elevation,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+    },
+    headerStyle,
+  ]);
+
   const renderIcons = React.useMemo(
     () => (
       <>
@@ -85,12 +156,7 @@ const HeaderView: React.FC<HeaderProps> = ({
   );
 
   return (
-    <View
-      style={[
-        styles.container,
-        { backgroundColor, elevation: isElevated ? 4 : 0 },
-      ]}
-    >
+    <View style={headerStyles}>
       {onBackPress && (
         <TouchableOpacity
           onPress={onBackPress}
@@ -115,12 +181,6 @@ const HeaderView: React.FC<HeaderProps> = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 16,
-  },
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",
