@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import {
   StyleSheet,
   Text,
@@ -7,18 +6,19 @@ import {
   View,
   ActivityIndicator,
   TextStyle,
+  StyleProp,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
 type HeaderProps = {
   title: string;
-  onBackPress: () => void;
-  isMenu: boolean;
-  onMenuPress: () => void;
-  isSearch: boolean;
-  onSearchPress: () => void;
+  onBackPress?: () => void;
+  isMenu?: boolean;
+  onMenuPress?: () => void;
+  isSearch?: boolean;
+  onSearchPress?: () => void;
   backgroundColor?: string;
-  titleStyle?: TextStyle;
+  titleStyle?: StyleProp<TextStyle>;
   additionalIcons?: Array<{
     name: string;
     onPress: () => void;
@@ -41,41 +41,27 @@ const HeaderView: React.FC<HeaderProps> = ({
   isElevated = false,
   isLoading = false,
 }) => {
-  return (
-    <View
-      style={[
-        styles.container,
-        { backgroundColor, elevation: isElevated ? 4 : 0 },
-      ]}
-    >
-      {onBackPress && (
-        <TouchableOpacity onPress={onBackPress}>
-          <MaterialIcons name="arrow-back" size={24} color="#000" />
-        </TouchableOpacity>
-      )}
-      <View style={styles.titleContainer}>
-        {isLoading && <ActivityIndicator size="small" color="#000" />}
-        <Text style={[styles.title, titleStyle]}>{title}</Text>
-      </View>
-      <View style={styles.iconContainer}>
-        {isSearch && (
-          <TouchableOpacity onPress={onSearchPress}>
-            <MaterialIcons
-              name="search"
-              size={24}
-              color="#000"
-              style={styles.icon}
-            />
+  const renderIcons = React.useMemo(
+    () => (
+      <>
+        {isSearch && onSearchPress && (
+          <TouchableOpacity
+            onPress={onSearchPress}
+            style={styles.icon}
+            accessibilityRole="button"
+            accessibilityLabel="Search"
+          >
+            <MaterialIcons name="search" size={24} color="#000" />
           </TouchableOpacity>
         )}
-        {isMenu && (
-          <TouchableOpacity onPress={onMenuPress}>
-            <MaterialIcons
-              name="menu"
-              size={24}
-              color="#000"
-              style={styles.icon}
-            />
+        {isMenu && onMenuPress && (
+          <TouchableOpacity
+            onPress={onMenuPress}
+            style={styles.icon}
+            accessibilityRole="button"
+            accessibilityLabel="Menu"
+          >
+            <MaterialIcons name="menu" size={24} color="#000" />
           </TouchableOpacity>
         )}
         {additionalIcons.map((icon, index) => (
@@ -83,6 +69,8 @@ const HeaderView: React.FC<HeaderProps> = ({
             key={index}
             onPress={icon.onPress}
             style={styles.icon}
+            accessibilityRole="button"
+            accessibilityLabel={icon.name}
           >
             <MaterialIcons
               name={icon.name}
@@ -91,7 +79,37 @@ const HeaderView: React.FC<HeaderProps> = ({
             />
           </TouchableOpacity>
         ))}
+      </>
+    ),
+    [isSearch, isMenu, additionalIcons, onSearchPress, onMenuPress]
+  );
+
+  return (
+    <View
+      style={[
+        styles.container,
+        { backgroundColor, elevation: isElevated ? 4 : 0 },
+      ]}
+    >
+      {onBackPress && (
+        <TouchableOpacity
+          onPress={onBackPress}
+          style={styles.icon}
+          accessibilityRole="button"
+          accessibilityLabel="Back"
+        >
+          <MaterialIcons name="arrow-back" size={24} color="#000" />
+        </TouchableOpacity>
+      )}
+      <View style={styles.titleContainer}>
+        {isLoading && (
+          <ActivityIndicator size="small" color="#000" style={styles.loading} />
+        )}
+        <Text style={[styles.title, titleStyle]} numberOfLines={1}>
+          {title}
+        </Text>
       </View>
+      <View style={styles.iconContainer}>{renderIcons}</View>
     </View>
   );
 };
@@ -120,6 +138,9 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginLeft: 16,
+  },
+  loading: {
+    marginRight: 8,
   },
 });
 

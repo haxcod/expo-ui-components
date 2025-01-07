@@ -1,6 +1,3 @@
-Here’s an updated `README.md` file including the `SplashScreenView` component:
-
----
 
 # expo-ui-components
 

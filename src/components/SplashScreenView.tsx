@@ -7,13 +7,17 @@ import {
   Image,
   TouchableOpacity,
   ImageSourcePropType,
+  View,
+  ViewStyle,
+  TextStyle,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+const defaultGradientColors = ["#4c669f", "#3b5998", "#192f6a"] as const;
 
 type SplashScreenProps = {
   logo?: ImageSourcePropType;
   backgroundColor?: string;
-  gradientColors?: [string, string, ...string[]];
+  gradientColors?: readonly [string, string, ...string[]];
   text?: string;
   textColor?: string;
   textFontSize?: number;
@@ -21,67 +25,104 @@ type SplashScreenProps = {
   onFinish?: () => void;
   animationType?: "fade" | "slide";
   showSkip?: boolean;
+  skipText?: string;
+  skipButtonStyle?: ViewStyle;
+  skipTextStyle?: TextStyle;
+  textStyle?: TextStyle;
 };
 
-const SplashScreenView: React.FC<SplashScreenProps> = ({
-  logo,
-  backgroundColor = "#000",
-  gradientColors = ["#000", "#333"],
-  text = "Welcome",
-  textColor = "#fff",
-  textFontSize = 24,
-  duration = 3000,
-  onFinish,
-  animationType = "fade",
-  showSkip = true,
-}) => {
-  const [fadeAnim] = useState(new Animated.Value(0));
-  const [translateY] = useState(new Animated.Value(50));
+const SplashScreenView: React.FC<SplashScreenProps> = React.memo(
+  ({
+    logo,
+    backgroundColor = "#fff",
+    gradientColors = defaultGradientColors,
+    text = "Welcome",
+    textColor = "#000",
+    textFontSize = 24,
+    duration = 3000,
+    onFinish,
+    animationType = "fade",
+    showSkip = true,
+    skipText = "Skip",
+    skipButtonStyle,
+    skipTextStyle,
+    textStyle,
+  }) => {
+    const [fadeAnim] = useState(new Animated.Value(0));
+    const [translateY] = useState(new Animated.Value(50));
 
-  useEffect(() => {
-    Animated.timing(animationType === "fade" ? fadeAnim : translateY, {
-      toValue: animationType === "fade" ? 1 : 0,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
+    useEffect(() => {
+      const startAnimation = () => {
+        const animationConfig = {
+          toValue: animationType === "fade" ? 1 : 0,
+          duration: 1000,
+          useNativeDriver: true,
+        };
+        Animated.timing(
+          animationType === "fade" ? fadeAnim : translateY,
+          animationConfig
+        ).start();
+      };
 
-    const timer = setTimeout(() => {
+      startAnimation();
+      const timer = setTimeout(() => onFinish && onFinish(), duration);
+
+      return () => clearTimeout(timer);
+    }, [animationType, fadeAnim, translateY, duration, onFinish]);
+
+    const handleSkip = () => {
+      fadeAnim.stopAnimation();
+      translateY.stopAnimation();
       onFinish && onFinish();
-    }, duration);
+    };
 
-    return () => clearTimeout(timer);
-  }, []);
-
-  return (
-    <LinearGradient
-      colors={gradientColors}
-      style={[styles.container, { backgroundColor }]}
-    >
-      <Animated.View
-        style={[
-          styles.logoContainer,
-          animationType === "fade"
-            ? { opacity: fadeAnim }
-            : { transform: [{ translateY }] },
-        ]}
-      >
-        {logo && (
-          <Image source={logo} style={styles.logo} resizeMode="contain" />
-        )}
-        <Text
-          style={[styles.text, { color: textColor, fontSize: textFontSize }]}
+    const renderContent = () => (
+      <>
+        <Animated.View
+          style={[
+            styles.logoContainer,
+            animationType === "fade"
+              ? { opacity: fadeAnim }
+              : { transform: [{ translateY }] },
+          ]}
         >
-          {text}
-        </Text>
-      </Animated.View>
-      {showSkip && (
-        <TouchableOpacity style={styles.skipButton} onPress={onFinish}>
-          <Text style={styles.skipText}>Skip</Text>
-        </TouchableOpacity>
-      )}
-    </LinearGradient>
-  );
-};
+          {logo && (
+            <Image source={logo} style={styles.logo} resizeMode="contain" />
+          )}
+          <Text
+            style={[
+              styles.text,
+              textStyle,
+              { color: textColor, fontSize: textFontSize },
+            ]}
+          >
+            {text}
+          </Text>
+        </Animated.View>
+        {showSkip && (
+          <TouchableOpacity
+            style={[styles.skipButton, skipButtonStyle]}
+            onPress={handleSkip}
+            accessibilityRole="button"
+            accessibilityLabel="Skip splash screen"
+          >
+            <Text style={[styles.skipText, skipTextStyle]}>{skipText}</Text>
+          </TouchableOpacity>
+        )}
+      </>
+    );
+
+    return gradientColors ? (
+      <LinearGradient colors={gradientColors} style={styles.container}>
+        {renderContent()}
+      </LinearGradient>
+    ) : (
+      <View style={[styles.container, { backgroundColor }]}>
+        {renderContent()}
+      </View>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   container: {

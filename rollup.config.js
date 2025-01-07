@@ -9,7 +9,7 @@ export default defineConfig({
     format: "esm", 
     sourcemap: true,
   },
-  external: ["react", "react-native"],
+  external: ["react", "react-native", "@expo/vector-icons", "expo-linear-gradient"],
   plugins: [
     typescript({
       tsconfig: "tsconfig.json",
