@@ -1,6 +1,6 @@
 {
   "name": "expo-ui-components",
-  "version": "1.1.8",
+  "version": "1.2.0",
   "description": "UI components for React Native projects",
   "author": "haxcod",
   "type": "module",
@@ -36,7 +36,6 @@
   "license": "ISC",
   "dependencies": {
     "@expo/vector-icons": "^14.0.4",
-    "expo-linear-gradient": "^14.0.1",
-    "expo-ui-components": "^1.1.8"
+    "expo-linear-gradient": "^14.0.1"
   }
 }

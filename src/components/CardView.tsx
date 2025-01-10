@@ -32,7 +32,7 @@ type CardViewProps = {
   marginBottom?: number;
   marginLeft?: number;
   marginRight?: number;
-  fullWidth?: boolean;
+  width?: number;
   cardStyle?: StyleProp<ViewStyle>;
   accessibilityLabel?: string;
   accessibilityHint?: string;
@@ -63,7 +63,7 @@ const CardView: React.FC<CardViewProps> = ({
   marginBottom,
   marginLeft,
   marginRight,
-  fullWidth = false,
+  width,
   cardStyle,
   accessibilityLabel = "Card",
   accessibilityHint,
@@ -93,7 +93,7 @@ const CardView: React.FC<CardViewProps> = ({
       marginBottom,
       marginLeft,
       marginRight,
-      width: fullWidth ? "100%" : undefined,
+      width,
     },
     cardStyle,
   ]);

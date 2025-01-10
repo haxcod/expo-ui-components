@@ -36,7 +36,7 @@ type ButtonViewProps = {
   loading?: boolean;
   activeOpacity?: number;
   icon?: React.ReactNode;
-  fullWidth?: boolean;
+  width?: number;
   shadowColor?: string;
   shadowOffset?: { width: number; height: number };
   shadowOpacity?: number;
@@ -85,13 +85,13 @@ const ButtonView: React.FC<ButtonViewProps> = React.memo(
     loading = false,
     activeOpacity = 0.7,
     icon,
-    fullWidth = false,
+    width,
     shadowColor = "#000",
     shadowOffset = { width: 0, height: 2 },
     shadowOpacity = 0.25,
     shadowRadius = 3.84,
     elevation = 5,
-    rippleColor = "rgba(0, 0, 0, 0.2)",
+    rippleColor,
     borderRadius = 10,
     borderColor,
     borderWidth,
@@ -127,7 +127,7 @@ const ButtonView: React.FC<ButtonViewProps> = React.memo(
         borderRadius,
         borderColor,
         borderWidth,
-        width: fullWidth ? "100%" : undefined,
+        width,
         margin,
         marginVertical,
         marginHorizontal,
