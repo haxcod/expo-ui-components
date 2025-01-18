@@ -7,47 +7,15 @@ import {
   Platform,
   TextStyle,
 } from "react-native";
+import { ComponentsProps } from "../lib/ComponentsProps";
 
-type TextViewProps = {
-  text: string;
-  style?: TextStyle;
-  onPress?: (event: GestureResponderEvent) => void;
-  isClickable?: boolean;
-  activeOpacity?: number;
-  textAlign?: TextStyle["textAlign"];
-  textShadowColor?: TextStyle["textShadowColor"];
-  textShadowOffset?: TextStyle["textShadowOffset"];
-  textShadowRadius?: TextStyle["textShadowRadius"];
-  fontFamily?: string;
-  fontSize?: number;
-  color?: string;
-  letterSpacing?: number;
-  lineHeight?: number;
-  backgroundColor?: string;
-  borderRadius?: number;
-  padding?: number;
-  paddingVertical?: number;
-  paddingHorizontal?: number;
-  paddingTop?: number;
-  paddingBottom?: number;
-  paddingLeft?: number;
-  paddingRight?: number;
-  margin?: number;
-  marginVertical?: number;
-  marginHorizontal?: number;
-  marginTop?: number;
-  marginBottom?: number;
-  marginLeft?: number;
-  marginRight?: number;
-  textTransform?: TextStyle["textTransform"];
-  accessibilityLabel?: string;
-  accessibilityHint?: string;
-};
+interface TextViewProps extends ComponentsProps {
+  isClickable: Boolean;
+}
 
 const TextView: React.FC<TextViewProps> = React.memo(
   ({
-    text = "",
-    style,
+    children,
     onPress,
     isClickable = false,
     activeOpacity = 0.7,
@@ -76,7 +44,6 @@ const TextView: React.FC<TextViewProps> = React.memo(
     marginBottom,
     marginLeft,
     marginRight,
-    textTransform,
     accessibilityLabel,
     accessibilityHint,
   }) => {
@@ -107,9 +74,7 @@ const TextView: React.FC<TextViewProps> = React.memo(
         marginBottom,
         marginLeft,
         marginRight,
-        textTransform,
       },
-      style,
     ]);
 
     if (isClickable) {
@@ -122,7 +87,7 @@ const TextView: React.FC<TextViewProps> = React.memo(
           accessibilityLabel={accessibilityLabel}
           accessibilityHint={accessibilityHint}
         >
-          <Text style={textStyles}>{text}</Text>
+          <Text style={textStyles}>{children}</Text>
         </TouchableOpacity>
       );
     }
@@ -133,7 +98,7 @@ const TextView: React.FC<TextViewProps> = React.memo(
         accessibilityRole="text"
         accessibilityLabel={accessibilityLabel}
       >
-        {text}
+        {children}
       </Text>
     );
   }

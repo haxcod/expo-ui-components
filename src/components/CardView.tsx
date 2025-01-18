@@ -5,40 +5,49 @@ import {
   StyleProp,
   StyleSheet,
   AccessibilityProps,
+  DimensionValue,
 } from "react-native";
 
-type CardViewProps = {
-  children: React.ReactNode;
-  backgroundColor?: string;
-  borderColor?: string;
-  borderWidth?: number;
-  borderRadius?: number;
-  shadowColor?: string;
-  shadowOpacity?: number;
-  shadowOffset?: { width: number; height: number };
-  shadowRadius?: number;
-  elevation?: number;
-  padding?: number;
-  paddingVertical?: number;
-  paddingHorizontal?: number;
-  paddingTop?: number;
-  paddingBottom?: number;
-  paddingLeft?: number;
-  paddingRight?: number;
-  margin?: number;
-  marginVertical?: number;
-  marginHorizontal?: number;
-  marginTop?: number;
-  marginBottom?: number;
-  marginLeft?: number;
-  marginRight?: number;
-  width?: number;
-  cardStyle?: StyleProp<ViewStyle>;
-  accessibilityLabel?: string;
-  accessibilityHint?: string;
-} & AccessibilityProps;
+// type CardViewProps = {
+//   children: React.ReactNode;
+//   backgroundColor?: string;
+//   borderColor?: string;
+//   borderWidth?: number;
+//   borderRadius?: number;
+//   shadowColor?: string;
+//   shadowOpacity?: number;
+//   shadowOffset?: { width: number; height: number };
+//   shadowRadius?: number;
+//   elevation?: number;
+//   padding?: number;
+//   paddingVertical?: number;
+//   paddingHorizontal?: number;
+//   paddingTop?: number;
+//   paddingBottom?: number;
+//   paddingLeft?: number;
+//   paddingRight?: number;
+//   margin?: number;
+//   marginVertical?: number;
+//   marginHorizontal?: number;
+//   marginTop?: number;
+//   marginBottom?: number;
+//   marginLeft?: number;
+//   marginRight?: number;
+//   width?: number;
+//   cardStyle?: StyleProp<ViewStyle>;
+//   accessibilityLabel?: string;
+//   accessibilityHint?: string;
+// } & AccessibilityProps;
 
-const CardView: React.FC<CardViewProps> = ({
+
+import { ComponentsProps } from "../lib/ComponentsProps";
+
+interface CardProps extends ComponentsProps {
+  children: React.ReactNode;
+  cardStyle?: StyleProp<ViewStyle>;
+}
+
+const CardView: React.FC<CardProps> = React.memo(({
   children,
   backgroundColor = "#fff",
   borderColor,
@@ -93,7 +102,7 @@ const CardView: React.FC<CardViewProps> = ({
       marginBottom,
       marginLeft,
       marginRight,
-      width,
+      width:100,
     },
     cardStyle,
   ]);
@@ -108,6 +117,6 @@ const CardView: React.FC<CardViewProps> = ({
       {children}
     </View>
   );
-};
+});
 
 export { CardView };

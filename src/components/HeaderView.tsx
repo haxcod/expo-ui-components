@@ -11,7 +11,49 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
-type HeaderProps = {
+// type HeaderProps = {
+//   title: string;
+//   onBackPress?: () => void;
+//   isMenu?: boolean;
+//   onMenuPress?: () => void;
+//   isSearch?: boolean;
+//   onSearchPress?: () => void;
+//   backgroundColor?: string;
+//   titleStyle?: StyleProp<TextStyle>;
+//   headerStyle?: StyleProp<ViewStyle>;
+//   padding?: number;
+//   paddingVertical?: number;
+//   paddingHorizontal?: number;
+//   paddingTop?: number;
+//   paddingBottom?: number;
+//   paddingLeft?: number;
+//   paddingRight?: number;
+//   margin?: number;
+//   marginVertical?: number;
+//   marginHorizontal?: number;
+//   marginTop?: number;
+//   marginBottom?: number;
+//   marginLeft?: number;
+//   marginRight?: number;
+//   borderRadius?: number;
+//   shadowColor?: string;
+//   shadowOffset?: { width: number; height: number };
+//   shadowOpacity?: number;
+//   shadowRadius?: number;
+//   elevation?: number;
+//   additionalIcons?: Array<{
+//     name: string;
+//     onPress: () => void;
+//     color?: string;
+//   }>;
+//   isLoading?: boolean;
+// };
+import { ComponentsProps } from "../lib/ComponentsProps";
+
+
+interface HeaderProps extends ComponentsProps {
+  children: React.ReactNode;
+  cardStyle?: StyleProp<ViewStyle>;
   title: string;
   onBackPress?: () => void;
   isMenu?: boolean;
@@ -21,34 +63,15 @@ type HeaderProps = {
   backgroundColor?: string;
   titleStyle?: StyleProp<TextStyle>;
   headerStyle?: StyleProp<ViewStyle>;
-  padding?: number;
-  paddingVertical?: number;
-  paddingHorizontal?: number;
-  paddingTop?: number;
-  paddingBottom?: number;
-  paddingLeft?: number;
-  paddingRight?: number;
-  margin?: number;
-  marginVertical?: number;
-  marginHorizontal?: number;
-  marginTop?: number;
-  marginBottom?: number;
-  marginLeft?: number;
-  marginRight?: number;
-  borderRadius?: number;
-  shadowColor?: string;
-  shadowOffset?: { width: number; height: number };
-  shadowOpacity?: number;
-  shadowRadius?: number;
-  elevation?: number;
+  isLoading?: boolean;
   additionalIcons?: Array<{
     name: string;
     onPress: () => void;
     color?: string;
+    size?: number;
   }>;
-  isLoading?: boolean;
-};
-
+  iconSize?: number;
+}
 const HeaderView: React.FC<HeaderProps> = ({
   title,
   onBackPress,
